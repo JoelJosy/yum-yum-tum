@@ -47,7 +47,7 @@ export const restaurants: Restaurant[] = [
     cuisine: "Modern French",
     rating: 1,
     visited: "June 2024",
-    note: "Small plates with big personality in the kind of room you never want to leave.",
+    note: "Small plates with big personality in the kind of room you never want to leave. ",
     longitude: 2.378,
     latitude: 48.871,
     postUrl: "/journal/le-servan-paris",
