@@ -1,16 +1,16 @@
 "use client";
 
 import { Search, X } from "lucide-react";
-import type { Restaurant } from "./restaurant-data";
+import type { GlobeMarker } from "@/types/restaurant";
 
 type RestaurantSearchProps = {
   searchOpen: boolean;
   searchQuery: string;
-  restaurants: Restaurant[];
+  restaurants: GlobeMarker[];
   onOpen: () => void;
   onClose: () => void;
   onQueryChange: (query: string) => void;
-  onSelectRestaurant: (restaurant: Restaurant) => void;
+  onSelectRestaurant: (restaurant: GlobeMarker) => void;
 };
 
 export function RestaurantSearch({
@@ -54,7 +54,7 @@ export function RestaurantSearch({
               {restaurants.length > 0 ? (
                 restaurants.map((restaurant) => (
                   <div
-                    key={restaurant.id}
+                    key={restaurant.slug}
                     className="border-b border-[#ff6f18]/15 last:border-b-0"
                   >
                     <button

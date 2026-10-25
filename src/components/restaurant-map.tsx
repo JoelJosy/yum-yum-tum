@@ -7,13 +7,13 @@ import {
   useMap,
   type MapViewport,
 } from "@/components/ui/map";
-import { restaurants } from "./restaurant-data";
 import { RestaurantLayer } from "./restaurant-layer";
 import { RestaurantSearch } from "./restaurant-search";
+import type { GlobeMarker } from "@/types/restaurant";
 
 const initialViewport: MapViewport = {
-  center: [13, 26],
-  zoom: 1.35,
+  center: [68.553, 23.574],
+  zoom: 3,
   bearing: 0,
   pitch: 0,
 };
@@ -28,7 +28,7 @@ function RestaurantSearchNavigation({
 }: {
   searchOpen: boolean;
   searchQuery: string;
-  visibleRestaurants: typeof restaurants;
+  visibleRestaurants: GlobeMarker[];
   onOpen: () => void;
   onClose: () => void;
   onQueryChange: (query: string) => void;
@@ -45,7 +45,7 @@ function RestaurantSearchNavigation({
       onQueryChange={onQueryChange}
       onSelectRestaurant={(restaurant) =>
         map?.flyTo({
-          center: [restaurant.longitude, restaurant.latitude],
+          center: [restaurant.lng, restaurant.lat],
           zoom: 15,
           duration: 3200,
           curve: 1.6,
@@ -56,7 +56,7 @@ function RestaurantSearchNavigation({
   );
 }
 
-export function RestaurantMap() {
+export function RestaurantMap({ restaurants }: { restaurants: GlobeMarker[] }) {
   const [viewport, setViewport] = useState<MapViewport>(initialViewport);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -68,7 +68,7 @@ export function RestaurantMap() {
           restaurant.name,
           restaurant.city,
           restaurant.country,
-          restaurant.cuisine,
+          ...restaurant.mustTry,
         ].some((value) => value.toLowerCase().includes(normalizedQuery)),
       )
     : restaurants;

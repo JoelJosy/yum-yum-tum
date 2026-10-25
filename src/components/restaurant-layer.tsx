@@ -7,14 +7,15 @@ import type {
   MapLayerMouseEvent,
 } from "maplibre-gl";
 import { MapPopup, useMap } from "@/components/ui/map";
-import type { Restaurant } from "./restaurant-data";
+import Link from "next/link";
+import type { GlobeMarker } from "@/types/restaurant";
 
 type RestaurantLayerProps = {
-  restaurants: Restaurant[];
+  restaurants: GlobeMarker[];
 };
 
 type SelectedRestaurant = {
-  restaurant: Restaurant;
+  restaurant: GlobeMarker;
   coordinates: [number, number];
 };
 
@@ -40,14 +41,14 @@ export function RestaurantLayer({ restaurants }: RestaurantLayerProps) {
       type: "FeatureCollection",
       features: restaurants.map((restaurant) => ({
         type: "Feature",
-        id: restaurant.id,
+        id: restaurant.slug,
         properties: {
-          id: restaurant.id,
+          id: restaurant.slug,
           rating: restaurant.rating,
         },
         geometry: {
           type: "Point",
-          coordinates: [restaurant.longitude, restaurant.latitude],
+          coordinates: [restaurant.lng, restaurant.lat],
         },
       })),
     }),
@@ -106,7 +107,7 @@ export function RestaurantLayer({ restaurants }: RestaurantLayerProps) {
     ) => {
       const feature = event.features?.[0];
       const restaurant = restaurants.find(
-        (item) => item.id === feature?.properties?.id,
+        (item) => item.slug === feature?.properties?.id,
       );
       if (!restaurant || !feature) return;
 
@@ -130,7 +131,7 @@ export function RestaurantLayer({ restaurants }: RestaurantLayerProps) {
       map.getCanvas().style.cursor = "pointer";
       const feature = event.features?.[0];
       const restaurant = restaurants.find(
-        (item) => item.id === feature?.properties?.id,
+        (item) => item.slug === feature?.properties?.id,
       );
       if (!restaurant || !feature) return;
       const coordinates = (
@@ -171,7 +172,7 @@ export function RestaurantLayer({ restaurants }: RestaurantLayerProps) {
   const activeSelection =
     selectedRestaurant &&
     restaurants.some(
-      (restaurant) => restaurant.id === selectedRestaurant.restaurant.id,
+      (restaurant) => restaurant.slug === selectedRestaurant.restaurant.slug,
     )
       ? selectedRestaurant
       : null;
@@ -207,35 +208,37 @@ export function RestaurantLayer({ restaurants }: RestaurantLayerProps) {
         >
           <div className="w-[min(20rem,calc(100vw-2rem))] max-w-full overflow-hidden">
             <div className="border-b border-[#ff6f18]/40 bg-[#242424] px-4 py-4">
-              <p className="mb-2 text-[9px] font-bold tracking-[0.18em] text-[#ff9c61] uppercase">
-                {activeSelection.restaurant.cuisine}
+              <p className="mt-2 text-[10px] tracking-[0.12em] text-[#ff9c61] uppercase">
+                {activeSelection.restaurant.city} /{" "}
+                {activeSelection.restaurant.country}
               </p>
-              <h2 className="text-xl leading-tight font-black tracking-tight text-[#f5f5f0]">
+              <h2 className="text-xl leading-tight font-black tracking-tight text-[#f5f5f0] pt-2">
                 {activeSelection.restaurant.name}
               </h2>
-              <p className="mt-1 text-xs text-[#a4a4a0]">
-                {activeSelection.restaurant.city},{" "}
-                {activeSelection.restaurant.country}
+              <p className="text-[#d4d4d0]">
+                  {activeSelection.restaurant.cuisine.join(" // ")}
               </p>
             </div>
             <div className="space-y-4 p-4">
-              <div className="flex items-center justify-between gap-3 text-xs">
-                <span className="text-[#a4a4a0]">
-                  {activeSelection.restaurant.visited}
-                </span>
-                <span className="shrink-0 font-bold text-[#ff9c61]">
-                  rating {activeSelection.restaurant.rating}/5
-                </span>
+              <div className="grid gap-2 text-xs">
+                <div className="flex items-center justify-between gap-3">
+                  <span className="text-[#a4a4a0]">
+                    visited on // {activeSelection.restaurant.visited}
+                  </span>
+                  <span className="shrink-0 font-bold text-[#ff9c61]">
+                    rating {activeSelection.restaurant.rating}/5
+                  </span>
+                </div>
               </div>
               <p className="text-sm leading-5 text-[#d4d4d0]">
-                {activeSelection.restaurant.note}
+                {activeSelection.restaurant.overview}
               </p>
-              <a
-                href={activeSelection.restaurant.postUrl}
+              <Link
+                href={`/restaurants/${activeSelection.restaurant.slug}`}
                 className="flex h-9 items-center justify-center border border-[#ff6f18] bg-[#ff6f18] px-3 text-xs font-bold text-[#1b1b1b] transition-colors hover:bg-[#ff9c61]"
               >
                 [ READ MORE ]
-              </a>
+              </Link>
             </div>
           </div>
         </MapPopup>
