@@ -122,10 +122,10 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply text-foreground bg-[#1b1b1b];
   }
   html {
-    @apply font-sans;
+    @apply h-full bg-[#1b1b1b] font-sans;
   }
   .maplibregl-popup-content {
     @apply bg-transparent! shadow-none! p-0! rounded-none!;
