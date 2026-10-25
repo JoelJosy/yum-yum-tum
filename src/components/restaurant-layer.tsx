@@ -5,7 +5,6 @@ import type {
   GeoJSONSource,
   MapGeoJSONFeature,
   MapLayerMouseEvent,
-  ExpressionSpecification,
 } from "maplibre-gl";
 import { MapPopup, useMap } from "@/components/ui/map";
 import type { Restaurant } from "./restaurant-data";
@@ -70,7 +69,7 @@ export function RestaurantLayer({ restaurants }: RestaurantLayerProps) {
       type: "circle",
       source: sourceId,
       paint: {
-        "circle-radius": 20,
+        "circle-radius": 30,
         "circle-blur": 0.95,
         "circle-color": ratingColor,
         "circle-opacity": 0.3,
@@ -82,7 +81,7 @@ export function RestaurantLayer({ restaurants }: RestaurantLayerProps) {
       type: "circle",
       source: sourceId,
       paint: {
-        "circle-radius": 7,
+        "circle-radius": 17,
         "circle-blur": 0.8,
         "circle-color": ratingColor,
         "circle-opacity": 0.6,
@@ -94,7 +93,7 @@ export function RestaurantLayer({ restaurants }: RestaurantLayerProps) {
       type: "circle",
       source: sourceId,
       paint: {
-        "circle-radius": 2,
+        "circle-radius": 6,
         "circle-color": ratingColor,
         "circle-opacity": 1,
         "circle-stroke-width": 1.5,
@@ -114,6 +113,13 @@ export function RestaurantLayer({ restaurants }: RestaurantLayerProps) {
       const coordinates = (
         feature.geometry as GeoJSON.Point
       ).coordinates.slice() as [number, number];
+      map.flyTo({
+        center: coordinates,
+        zoom: 15,
+        duration: 3200,
+        curve: 1.6,
+        essential: true,
+      });
       setHoveredRestaurant(null);
       setSelectedRestaurant({ restaurant, coordinates });
     };
@@ -182,7 +188,7 @@ export function RestaurantLayer({ restaurants }: RestaurantLayerProps) {
           focusAfterOpen={false}
           offset={10}
           closeButton={false}
-          className="border-[#ff6f18]/70 bg-[#1b1b1b] px-2 py-1 font-mono text-xs text-[#f5f5f0] shadow-[2px_2px_0_#ff6f18]"
+          className="!rounded-none border-[#ff6f18]/70 bg-[#1b1b1b] px-2 py-1 font-mono text-xs text-[#f5f5f0] shadow-[2px_2px_0_#ff6f18]"
         >
           {hoveredRestaurant.restaurant.name}
         </MapPopup>
@@ -196,35 +202,39 @@ export function RestaurantLayer({ restaurants }: RestaurantLayerProps) {
           focusAfterOpen={false}
           offset={10}
           closeButton
+          maxWidth="min(20rem, calc(100vw - 2rem))"
+          className="!max-w-[calc(100vw-2rem)] !rounded-none border-[#ff6f18]/80 bg-[#1b1b1b] p-0 font-mono text-[#f5f5f0] shadow-[5px_5px_0_#ff6f18]"
         >
-          <div className="bg-card text-card-foreground w-72 overflow-hidden rounded-2xl border p-0 shadow-xl">
-            <div className="bg-primary text-primary-foreground px-5 py-4">
-              <p className="text-primary-foreground/70 mb-1 text-[10px] font-semibold tracking-[0.18em] uppercase">
+          <div className="w-[min(20rem,calc(100vw-2rem))] max-w-full overflow-hidden">
+            <div className="border-b border-[#ff6f18]/40 bg-[#242424] px-4 py-4">
+              <p className="mb-2 text-[9px] font-bold tracking-[0.18em] text-[#ff9c61] uppercase">
                 {activeSelection.restaurant.cuisine}
               </p>
-              <h2 className="text-xl leading-tight font-semibold">
+              <h2 className="text-xl leading-tight font-black tracking-tight text-[#f5f5f0]">
                 {activeSelection.restaurant.name}
               </h2>
-              <p className="text-primary-foreground/70 mt-1 text-xs">
+              <p className="mt-1 text-xs text-[#a4a4a0]">
                 {activeSelection.restaurant.city},{" "}
                 {activeSelection.restaurant.country}
               </p>
             </div>
-            <div className="space-y-3 p-5">
-              <div className="text-muted-foreground flex items-center justify-between text-xs">
-                <span>{activeSelection.restaurant.visited}</span>
-                <span className="text-card-foreground font-semibold">
-                  rating {activeSelection.restaurant.rating}/3
+            <div className="space-y-4 p-4">
+              <div className="flex items-center justify-between gap-3 text-xs">
+                <span className="text-[#a4a4a0]">
+                  {activeSelection.restaurant.visited}
+                </span>
+                <span className="shrink-0 font-bold text-[#ff9c61]">
+                  rating {activeSelection.restaurant.rating}/5
                 </span>
               </div>
-              <p className="text-muted-foreground text-sm leading-5">
+              <p className="text-sm leading-5 text-[#d4d4d0]">
                 {activeSelection.restaurant.note}
               </p>
               <a
                 href={activeSelection.restaurant.postUrl}
-                className="flex h-9 items-center justify-center rounded-lg bg-[#bd5f3c] px-3 text-xs font-semibold text-white transition-colors hover:bg-[#a94f30]"
+                className="flex h-9 items-center justify-center border border-[#ff6f18] bg-[#ff6f18] px-3 text-xs font-bold text-[#1b1b1b] transition-colors hover:bg-[#ff9c61]"
               >
-                Read the full story
+                [ READ MORE ]
               </a>
             </div>
           </div>
