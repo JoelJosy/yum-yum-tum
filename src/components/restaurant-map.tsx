@@ -8,7 +8,7 @@ import {
   type MapViewport,
 } from "@/components/ui/map";
 import { restaurants } from "./restaurant-data";
-import { RestaurantMarker } from "./restaurant-marker";
+import { RestaurantLayer } from "./restaurant-layer";
 import { RestaurantSearch } from "./restaurant-search";
 
 const initialViewport: MapViewport = {
@@ -102,9 +102,7 @@ export function RestaurantMap() {
             showLocate
             showFullscreen
           />
-          {visibleRestaurants.map((restaurant) => (
-            <RestaurantMarker key={restaurant.id} restaurant={restaurant} />
-          ))}
+          <RestaurantLayer restaurants={visibleRestaurants} />
         </Map>
       </div>
     </section>
