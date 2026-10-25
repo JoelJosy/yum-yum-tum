@@ -30,7 +30,7 @@ export function RestaurantMap({
 
   return (
     <section className="relative h-screen w-full">
-      <div className="bg-background absolute inset-0 overflow-hidden">
+      <div className="absolute inset-0 overflow-hidden bg-[#1b1b1b]">
         <ThemeToggle theme={theme} onToggle={onToggleTheme} />
         <Map
           className="h-full w-full"

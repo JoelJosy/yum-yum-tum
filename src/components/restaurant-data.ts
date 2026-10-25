@@ -4,7 +4,7 @@ export type Restaurant = {
   city: string;
   country: string;
   cuisine: string;
-  rating: number;
+  rating: 1 | 2 | 3;
   visited: string;
   note: string;
   longitude: number;
@@ -19,7 +19,7 @@ export const restaurants: Restaurant[] = [
     city: "New York",
     country: "United States",
     cuisine: "Korean tasting menu",
-    rating: 4.9,
+    rating: 3,
     visited: "May 2024",
     note: "A thoughtful, card-led tasting menu where every course tells a story.",
     longitude: -73.982,
@@ -32,7 +32,7 @@ export const restaurants: Restaurant[] = [
     city: "London",
     country: "United Kingdom",
     cuisine: "Bombay comfort food",
-    rating: 3.7,
+    rating: 2,
     visited: "September 2023",
     note: "Black daal, roomali rolls, and a breakfast worth crossing town for.",
     longitude: -0.134,
@@ -45,7 +45,7 @@ export const restaurants: Restaurant[] = [
     city: "Paris",
     country: "France",
     cuisine: "Modern French",
-    rating: 1.8,
+    rating: 1,
     visited: "June 2024",
     note: "Small plates with big personality in the kind of room you never want to leave.",
     longitude: 2.378,
@@ -58,7 +58,7 @@ export const restaurants: Restaurant[] = [
     city: "Bangkok",
     country: "Thailand",
     cuisine: "Southern Thai",
-    rating: 4.9,
+    rating: 3,
     visited: "February 2025",
     note: "Deep, bright southern flavours and the most memorable crab curry of the trip.",
     longitude: 100.547,
@@ -71,7 +71,7 @@ export const restaurants: Restaurant[] = [
     city: "San Francisco",
     country: "United States",
     cuisine: "Handmade pasta",
-    rating: 4.6,
+    rating: 3,
     visited: "October 2022",
     note: "Pasta made with restraint, precision, and a little bit of California sunshine.",
     longitude: -122.412,
@@ -84,7 +84,7 @@ export const restaurants: Restaurant[] = [
     city: "Mexico City",
     country: "Mexico",
     cuisine: "Contemporary Mexican",
-    rating: 4.8,
+    rating: 3,
     visited: "November 2024",
     note: "A playful tour through Mexico's pantry, from delicate herbs to smoky cacao.",
     longitude: -99.198,
@@ -97,7 +97,7 @@ export const restaurants: Restaurant[] = [
     city: "Copenhagen",
     country: "Denmark",
     cuisine: "Nordic tasting menu",
-    rating: 4.7,
+    rating: 3,
     visited: "August 2023",
     note: "Quietly spectacular cooking that makes even a single carrot feel celebratory.",
     longitude: 12.572,
@@ -110,7 +110,7 @@ export const restaurants: Restaurant[] = [
     city: "Bengaluru",
     country: "India",
     cuisine: "Seasonal Indian",
-    rating: 4.6,
+    rating: 3,
     visited: "January 2025",
     note: "A bright, modern take on familiar flavours, with a menu that follows the seasons.",
     longitude: 77.594,

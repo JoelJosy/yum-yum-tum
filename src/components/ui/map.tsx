@@ -873,7 +873,7 @@ const positionClasses = {
 
 function ControlGroup({ children }: { children: React.ReactNode }) {
   return (
-    <div className="border-border bg-background [&>button:not(:last-child)]:border-border flex flex-col overflow-hidden rounded-md border shadow-sm [&>button:not(:last-child)]:border-b">
+    <div className="flex flex-col overflow-hidden border border-[#ff6f18]/70 bg-[#1b1b1b]/90 shadow-[2px_2px_0_#ff6f18] backdrop-blur-sm [&>button:not(:last-child)]:border-b [&>button:not(:last-child)]:border-[#ff6f18]/30">
       {children}
     </div>
   );
@@ -896,10 +896,9 @@ function ControlButton({
       aria-label={label}
       type="button"
       className={cn(
-        "flex size-8 items-center justify-center transition-colors",
-        "first:rounded-t-md last:rounded-b-md",
-        "hover:bg-accent dark:hover:bg-accent/40",
-        "focus-visible:ring-ring focus-visible:ring-2 focus-visible:outline-none focus-visible:ring-inset",
+        "flex size-8 items-center justify-center text-[#ff6f18] transition-colors",
+        "hover:bg-[#ff6f18] hover:text-[#1b1b1b]",
+        "focus-visible:ring-2 focus-visible:ring-[#ff6f18] focus-visible:outline-none focus-visible:ring-inset",
         "disabled:pointer-events-none disabled:opacity-50",
       )}
       disabled={disabled}

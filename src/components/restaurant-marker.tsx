@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowUpRight, MapPin, Star } from "lucide-react";
+import { ArrowUpRight, Star } from "lucide-react";
 import {
   MapMarker,
   MarkerContent,
@@ -10,12 +10,9 @@ import {
 import type { Restaurant } from "./restaurant-data";
 
 export function RestaurantMarker({ restaurant }: { restaurant: Restaurant }) {
-  const markerColor =
-    restaurant.rating >= 4
-      ? "bg-[#70a15a]"
-      : restaurant.rating < 2
-        ? "bg-[#d4584a]"
-        : "bg-[#d48a43]";
+  const markerColor = "#ff9c61";
+  const glowSize = 5 + restaurant.rating * 1.5;
+  const glowOpacity = 0.4 + restaurant.rating * 0.12;
 
   return (
     <MapMarker
@@ -23,8 +20,23 @@ export function RestaurantMarker({ restaurant }: { restaurant: Restaurant }) {
       latitude={restaurant.latitude}
     >
       <MarkerContent>
-        <div className={`group relative flex size-8 items-center justify-center rounded-full border-2 border-white ${markerColor} shadow-[0_3px_10px_rgba(0,0,0,0.25)] transition-transform duration-200 hover:scale-125 dark:border-background`}>
-          <MapPin className="size-4 fill-[#fffaf2] text-[#fffaf2]" />
+        <div
+          className="group relative flex size-7 items-center justify-center transition-transform duration-200 hover:scale-125"
+          style={{
+            filter: `drop-shadow(0 0 ${glowSize}px ${markerColor}${Math.round(glowOpacity * 255).toString(16).padStart(2, "0")})`,
+          }}
+        >
+          <span
+            className="absolute size-7 rounded-full blur-sm"
+            style={{ backgroundColor: markerColor, opacity: glowOpacity }}
+          />
+          <span
+            className="relative size-2.5 rounded-full"
+            style={{
+              backgroundColor: markerColor,
+              boxShadow: `0 0 5px 1px ${markerColor}`,
+            }}
+          />
         </div>
       </MarkerContent>
       <MarkerTooltip>{restaurant.name}</MarkerTooltip>
