@@ -1,31 +1,23 @@
 "use client";
 
 import { useState } from "react";
-import { Map, type MapViewport, MapControls} from "@/components/ui/map";
+import { MapPin } from "lucide-react";
+import { restaurants } from "@/components/restaurant-data";
+import { RestaurantMap } from "@/components/restaurant-map";
+
+type Theme = "light" | "dark";
 
 export default function Home() {
-  const [viewport, setViewport] = useState<MapViewport>({
-    center: [77.658, 13.019],
-    zoom: 9,
-    bearing: 0,
-    pitch: 0,
-  });
+  const [theme, setTheme] = useState<Theme>("dark");
 
   return (
-    <div className="relative h-screen w-full">
-      <Map 
-        viewport={viewport} 
-        onViewportChange={setViewport} 
-        projection={{ type: "globe" }} 
-      >
-        <MapControls
-          position="top-right"
-          showZoom
-          showCompass
-          showLocate
-          showFullscreen
-        />
-      </Map>
-    </div>
+    <main
+      className={`${theme === "dark" ? "dark" : ""} bg-background text-foreground relative min-h-screen overflow-hidden`}
+    >
+      <RestaurantMap
+        theme={theme}
+        onToggleTheme={() => setTheme(theme === "dark" ? "light" : "dark")}
+      />
+    </main>
   );
 }
