@@ -8,9 +8,6 @@ import {
 } from "@/components/ui/map";
 import { restaurants } from "./restaurant-data";
 import { RestaurantMarker } from "./restaurant-marker";
-import { ThemeToggle } from "./theme-toggle";
-
-type Theme = "light" | "dark";
 
 const initialViewport: MapViewport = {
   center: [13, 26],
@@ -19,25 +16,18 @@ const initialViewport: MapViewport = {
   pitch: 0,
 };
 
-export function RestaurantMap({
-  theme,
-  onToggleTheme,
-}: {
-  theme: Theme;
-  onToggleTheme: () => void;
-}) {
+export function RestaurantMap() {
   const [viewport, setViewport] = useState<MapViewport>(initialViewport);
 
   return (
     <section className="relative h-screen w-full">
-      <div className="absolute inset-0 overflow-hidden bg-[#1b1b1b]">
-        <ThemeToggle theme={theme} onToggle={onToggleTheme} />
+      <div className="absolute inset-0 overflow-hidden bg-[#101010]">
         <Map
           className="h-full w-full"
           viewport={viewport}
           onViewportChange={setViewport}
           projection={{ type: "globe" }}
-          theme={theme}
+          theme="dark"
         >
           <MapControls
             position="top-right"
